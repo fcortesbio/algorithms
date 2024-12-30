@@ -2,7 +2,8 @@ function print(...args) { console.log(...args) };
 
 function fiboRec(n) {
     n = Number(n);
-    return ( n === 0 || n === 1 ) ? n : fiboRec(n - 1) + fiboRec(n - 2)
+    return ( n === 0 || n === 1 ) ? 
+    n : fiboRec(n - 1) + fiboRec(n - 2)
 }
 
 function fiboMath(n) {
