@@ -1,52 +1,35 @@
-function print(...args) { console.log(...args) };
+function recursiveFibonacci(number){
+    const cache = new Map();
+    const capacity = 10;
+    let n = number
 
-function fiboRec(n) {
-    n = Number(n);
-    return ( n === 0 || n === 1 )? n : fiboRec(n - 1) + fiboRec(n - 2)
+    function fib(n){
+        if (cache.has(n)){
+            const value = cache.get(n);
+            cache.delete(n);
+            cache.set(n, value);
+            return value;
+        }
+
+        result = n <= 1 ? n : fib(n-1) + fib(n-2);
+        cache.set(n, result);
+
+        if (cache.size > capacity) {
+            cache.delete(cache.keys().next().value);
+        }
+        return result
     }
+    return fib(n)
+}
 
+const b = 1 / Math.sqrt(5)
+const phi = (1 + Math.sqrt(5)) / 2
+const psi = (1 - Math.sqrt(5)) / 2
 
-function fiboMath(n) {
+function binnetsFibonnacci(n) {
     if (n > 0 && Number.isInteger(n)) {
-        const b = 1 / Math.sqrt(5)
-        const phi = (1 + Math.sqrt(5)) / 2
-        const psi = (1 - Math.sqrt(5)) / 2
 
         return Math.round(b * (phi ** n) - (psi ** n))
     }
+    else return NaN
 }
-
-let startTime, endTime, duration;
-let numb = 30 ;
-let durations = []
-let it = 0
-let sum = 0
-
-for (let i = 0; i < 100; i++) {
-    startTime = performance.now();
-    fiboRec(numb)
-    endTime = performance.now();
-    duration = endTime - startTime;
-    durations.push(duration)
-    it++
-}
-
-durations.forEach(number => sum += number);
-av = sum / it
-print("Average handle time for fiboRec: ", av)
-
-durations = []
-sum = 0
-it = 0
-
-for (let i = 0; i < 100; i++) {
-    startTime = performance.now();
-    fiboMath(numb)
-    endTime = performance.now();
-    let duration = endTime - startTime;
-    durations.push(duration)
-    it++
-}
-durations.forEach(number => sum += number);
-av = sum / it
-print("Average handle time for fiboMath", av);
